@@ -24,7 +24,7 @@ public class Asseguradora {
     @Column (name= "nom", length=100, nullable=false, unique=true)
     private String nom;
     
-    @Column (name= "cif")
+    @Column (name= "cif", unique=true)
     private String cif;
 
     public Asseguradora(Long id, String nom, String cif) {

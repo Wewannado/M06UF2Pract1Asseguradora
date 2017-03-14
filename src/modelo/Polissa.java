@@ -6,6 +6,7 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.IndexColumn;
@@ -24,6 +27,11 @@ import org.hibernate.annotations.IndexColumn;
  * @author Roger G. Coscojuela
  */
 @Entity
+@NamedQueries({
+@NamedQuery(name="polissaXNumero", query="SELECT p FROM Polissa p WHERE p.numeroPolissa=:numero"),
+@NamedQuery(name="polissaXPrenedor", query="SELECT p FROM Polissa p WHERE p.prenedor=:prenedor"),
+@NamedQuery(name="polissaXVehicle", query="SELECT p FROM Polissa p WHERE p.vehicle=:vehicle")
+})
 @Table(name = "M6UF2_POLISSES")
 public class Polissa implements Serializable {
 
@@ -37,7 +45,7 @@ public class Polissa implements Serializable {
     private Long id;
     
     
-    @Column (name= "numeroPolissa", length=10)
+    @Column (name= "numeroPolissa",unique=true, length=10)
     private String numeroPolissa;
     
     
@@ -52,10 +60,10 @@ public class Polissa implements Serializable {
     
 
     @Column (name= "dataInici", nullable=false)
-    private Calendar dataInici;
+    private Date dataInici;
     
     @Column (name= "dataFi", nullable=false)
-    private Calendar dataFi;
+    private Date dataFi;
     
     @Column (name= "tipusPolissa")
     private TipusPolissa tipus;
@@ -65,7 +73,7 @@ public class Polissa implements Serializable {
    
    
 
-    public Polissa(Long id, String numeroPolissa, Client prenedor, Vehicle vehicle, Calendar dataInici, Calendar dataFi, TipusPolissa tipus, double prima) {
+    public Polissa(Long id, String numeroPolissa, Client prenedor, Vehicle vehicle, Date dataInici, Date dataFi, TipusPolissa tipus, double prima) {
         this.id = id;
         this.numeroPolissa = numeroPolissa;
         this.prenedor = prenedor;
@@ -112,19 +120,19 @@ public class Polissa implements Serializable {
         this.vehicle = vehicle;
     }
 
-    public Calendar getDataInici() {
+    public Date getDataInici() {
         return dataInici;
     }
 
-    public void setDataInici(Calendar dataInici) {
+    public void setDataInici(Date dataInici) {
         this.dataInici = dataInici;
     }
 
-    public Calendar getDataFi() {
+    public Date getDataFi() {
         return dataFi;
     }
 
-    public void setDataFi(Calendar dataFi) {
+    public void setDataFi(Date dataFi) {
         this.dataFi = dataFi;
     }
 

@@ -57,7 +57,7 @@ public class Client_Controller {
         em.merge(c);
 
         System.out.println("commit");
-        em.getTransaction().commit();
+        //em.getTransaction().commit();
         etx.commit();
 
         System.out.println("close");

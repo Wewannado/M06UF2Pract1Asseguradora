@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import modelo.Client;
+import modelo.Polissa;
 import modelo.Vehicle;
 
 /**
@@ -53,7 +55,7 @@ public class Vehicle_Controller {
         em.merge(c);
 
         System.out.println("commit");
-        em.getTransaction().commit();
+        //em.getTransaction().commit();
         etx.commit();
 
         System.out.println("close");
@@ -62,6 +64,11 @@ public class Vehicle_Controller {
 
     public boolean Eliminar(Vehicle c) {
         // Recupera el entity manager
+        Polissa_Controller pc = new Polissa_Controller();
+        
+        //Polissa[] polisses = pc.
+        
+        
         EM_Controller oem = new EM_Controller();
         EntityManager em = oem.getEntityManager();
 
@@ -106,6 +113,20 @@ public class Vehicle_Controller {
         //List<Persona> lista = (List<Persona>) em.createQuery("FROM Persona").getResultList();
         Query q = em.createQuery("FROM Vehicle");
         List<Vehicle> lista = (List<Vehicle>) q.getResultList();
+        System.out.println("close");
+        em.close();
+        return lista;
+    }
+    
+    
+    public List<Vehicle> ConsultaXClient(Client c) {
+        // Recupera el entity manager
+        EntityManager em = new EM_Controller().getEntityManager();
+        System.out.println("Consulta");
+        //List<Persona> lista = (List<Persona>) em.createQuery("FROM Persona").getResultList();
+        Query query = em.createNamedQuery("vehiclesXClient", Vehicle.class);
+        query.setParameter("propietari", c);
+        List<Vehicle> lista = (List<Vehicle>) query.getResultList();
         System.out.println("close");
         em.close();
         return lista;

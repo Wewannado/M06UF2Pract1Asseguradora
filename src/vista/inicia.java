@@ -4,14 +4,23 @@
 package vista;
 
 import controlador.Client_Controller;
+import controlador.Polissa_Controller;
 import controlador.Vehicle_Controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Adreca;
 import modelo.Client;
+import modelo.Polissa;
 import modelo.Vehicle;
 
 /**
@@ -20,6 +29,8 @@ import modelo.Vehicle;
  */
 public class inicia extends javax.swing.JFrame {
 
+    
+    
     /**
      * Creates new form inicia
      */
@@ -71,6 +82,30 @@ public class inicia extends javax.swing.JFrame {
         btMostrarTotsVehicles = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        eTNumeroPolissa = new javax.swing.JTextField();
+        eTDNIPrenedor = new javax.swing.JTextField();
+        eTPolissaMatriculaVehicle = new javax.swing.JTextField();
+        eTDataInici = new javax.swing.JTextField();
+        eTDataFi = new javax.swing.JTextField();
+        cbTipusPolissa = new javax.swing.JComboBox();
+        btBuscarXNumPolissa = new javax.swing.JButton();
+        btInserirPolissa = new javax.swing.JButton();
+        btModificarPolissa = new javax.swing.JButton();
+        btEliminarPolissa = new javax.swing.JButton();
+        btMostrarTotesPolisses = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel16 = new javax.swing.JLabel();
+        eTPrima = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,7 +208,7 @@ public class inicia extends javax.swing.JFrame {
                             .addComponent(btEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(77, 77, 77))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
@@ -204,7 +239,7 @@ public class inicia extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(eTPoblacio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscarTotsClients))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -305,7 +340,7 @@ public class inicia extends javax.swing.JFrame {
                     .addComponent(btEliminarVehicle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btMostrarTotsVehicles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,11 +373,181 @@ public class inicia extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9)
                         .addComponent(eTDNIPropietari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane2.addTab("Vehicle", jPanel1);
+
+        jLabel10.setText("Numero Polissa");
+
+        jLabel11.setText("DNI Prenedor");
+
+        jLabel12.setText("Matricula Vehicle");
+
+        jLabel13.setText("Data Inici");
+
+        jLabel14.setText("Data Fi");
+
+        jLabel15.setText("Tipus");
+
+        cbTipusPolissa.setModel(new DefaultComboBoxModel(Polissa.TipusPolissa.values()));
+
+        btBuscarXNumPolissa.setText("Buscar per Numero Polissa");
+        btBuscarXNumPolissa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarXNumPolissaActionPerformed(evt);
+            }
+        });
+
+        btInserirPolissa.setText("Inserir");
+        btInserirPolissa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btInserirPolissaActionPerformed(evt);
+            }
+        });
+
+        btModificarPolissa.setText("Modificar");
+        btModificarPolissa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btModificarPolissaActionPerformed(evt);
+            }
+        });
+
+        btEliminarPolissa.setText("Eliminar");
+        btEliminarPolissa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEliminarPolissaActionPerformed(evt);
+            }
+        });
+
+        btMostrarTotesPolisses.setText("Mostrar Tots");
+        btMostrarTotesPolisses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMostrarTotesPolissesActionPerformed(evt);
+            }
+        });
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Numero Polissa", "DNI Prenedor", "Matricula Vehicle", "Data Inici", "Data Fi", "Tipus"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTable3);
+
+        jLabel16.setText("Import Prima");
+
+        jTextPane1.setText("Important ! Les dates en format YYYY-MM-DD");
+        jScrollPane4.setViewportView(jTextPane1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel10))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(cbTipusPolissa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eTNumeroPolissa)
+                    .addComponent(eTDNIPrenedor)
+                    .addComponent(eTPolissaMatriculaVehicle)
+                    .addComponent(eTDataInici)
+                    .addComponent(eTDataFi)
+                    .addComponent(eTPrima))
+                .addGap(68, 68, 68)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btBuscarXNumPolissa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btInserirPolissa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btModificarPolissa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btEliminarPolissa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btMostrarTotesPolisses, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(eTNumeroPolissa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(eTDNIPrenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(eTPolissaMatriculaVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(eTDataInici, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btBuscarXNumPolissa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btInserirPolissa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btModificarPolissa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btEliminarPolissa)
+                        .addGap(13, 13, 13)
+                        .addComponent(btMostrarTotesPolisses)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(eTDataFi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(eTPrima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(cbTipusPolissa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jTabbedPane2.addTab("Polisses", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -370,14 +575,25 @@ public class inicia extends javax.swing.JFrame {
         } catch (NoResultException ex) {
             JOptionPane.showMessageDialog(this, "Sense resultats");
         }
-
-
     }//GEN-LAST:event_btBuscarXNomActionPerformed
 
     private void btEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEliminarActionPerformed
         Client_Controller client_Control = new Client_Controller();
+        Polissa_Controller pc = new Polissa_Controller();
+        Vehicle_Controller vc = new Vehicle_Controller();
         try {
             Client client = client_Control.Buscar(eTNif.getText());
+            
+            List<Polissa> polisses = pc.ConsultaXClient(client);
+            for (Polissa polisse : polisses) {
+                pc.Eliminar(polisse);
+            }
+            
+            List<Vehicle> vehicles = vc.ConsultaXClient(client);
+            for (Vehicle vehicle : vehicles) {
+                vc.Eliminar(vehicle);
+            }
+           
             client_Control.Eliminar(client);
             JOptionPane.showMessageDialog(this, "Eliminat");
 
@@ -408,6 +624,7 @@ public class inicia extends javax.swing.JFrame {
             client.setAdreca(new Adreca(eTCarrer.getText(), Integer.valueOf(eTNumero.getText()), eTPoblacio.getText()));
             client.setNom(eTNom.getText());
             client_Control.Modificar(client);
+            JOptionPane.showMessageDialog(this, "Modificat");
         } catch (NoResultException ex) {
             JOptionPane.showMessageDialog(this, "Sense resultats");
         }
@@ -432,17 +649,26 @@ public class inicia extends javax.swing.JFrame {
     }//GEN-LAST:event_btBuscarTotsClientsActionPerformed
 
     private void btBuscarXMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarXMatriculaActionPerformed
-        // TODO add your handling code here:
+        Vehicle_Controller vc = new Vehicle_Controller();
+        try {
+            Vehicle v = vc.Buscar(eTMatricula.getText());
+            eTMatricula.setText(v.getMatricula());
+            eTMarca.setText(v.getMarca());
+            eTAnyMatriculacio.setText(String.valueOf(v.getAnyMatriculacio()));
+            eTDNIPropietari.setText(v.getPropietari().getNif());
+        } catch (NoResultException ex) {
+            JOptionPane.showMessageDialog(this, "Sense resultats");
+        }
     }//GEN-LAST:event_btBuscarXMatriculaActionPerformed
 
     private void btInserirVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirVehicleActionPerformed
         int LLARGADA_MAXIMA_MATRICULA = 7;
-        if (eTMatricula.getText().length() < LLARGADA_MAXIMA_MATRICULA) {
+        if (eTMatricula.getText().length() <= LLARGADA_MAXIMA_MATRICULA) {
             Vehicle_Controller vc = new Vehicle_Controller();
             Client_Controller cc = new Client_Controller();
             try {
                 Client propietari = cc.Buscar(eTDNIPropietari.getText());
-                Vehicle v = new Vehicle(eTMatricula.getText(), eTMarca.getText(), Integer.valueOf(eTAnyMatriculacio.getText()), propietari);
+                Vehicle v = new Vehicle(eTMatricula.getText().toUpperCase(), eTMarca.getText().toUpperCase(), Integer.valueOf(eTAnyMatriculacio.getText()), propietari);
                 vc.Insertar(v);
                 JOptionPane.showMessageDialog(this, "Inserit");
             } catch (NoResultException ex) {
@@ -450,20 +676,42 @@ public class inicia extends javax.swing.JFrame {
             } catch (PersistenceException ex) {
                 JOptionPane.showMessageDialog(this, "Error. Element duplicat");
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "La matricula pot tenir un maxim de 7 caracters");
         }
-        else{
-            JOptionPane.showMessageDialog(this, "La matricula pot tenir un maxim de 7 caracters"); 
-        }
-
-
     }//GEN-LAST:event_btInserirVehicleActionPerformed
 
     private void btModificarVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModificarVehicleActionPerformed
-        // TODO add your handling code here:
+        Vehicle_Controller vc = new Vehicle_Controller();
+        Client_Controller cc = new Client_Controller();
+        try {
+            Vehicle v = vc.Buscar(eTMatricula.getText().toUpperCase());
+            v.setMarca(eTMarca.getText().toUpperCase());
+            v.setAnyMatriculacio(Integer.valueOf(eTAnyMatriculacio.getText()));
+            v.setPropietari(cc.Buscar(eTDNIPropietari.getText()));
+            vc.Modificar(v);
+            JOptionPane.showMessageDialog(this, "Modificat");
+        } catch (NoResultException ex) {
+            JOptionPane.showMessageDialog(this, "Sense resultats");
+        }
     }//GEN-LAST:event_btModificarVehicleActionPerformed
 
     private void btEliminarVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEliminarVehicleActionPerformed
-        // TODO add your handling code here:
+        Vehicle_Controller vc = new Vehicle_Controller();
+        Polissa_Controller pc = new Polissa_Controller();
+        try {
+            Vehicle v = vc.Buscar(eTMatricula.getText());
+            
+            List<Polissa> polisses = pc.ConsultaXVehicle(v);
+            for (Polissa polisse : polisses) {
+                pc.Eliminar(polisse);
+            }
+            
+            vc.Eliminar(v);
+            JOptionPane.showMessageDialog(this, "Eliminat");
+        } catch (PersistenceException ex) {
+            JOptionPane.showMessageDialog(this, "Fallo.");
+        }
     }//GEN-LAST:event_btEliminarVehicleActionPerformed
 
     private void btMostrarTotsVehiclesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMostrarTotsVehiclesActionPerformed
@@ -482,6 +730,115 @@ public class inicia extends javax.swing.JFrame {
         }
         jTable2.setModel(tableModel2);
     }//GEN-LAST:event_btMostrarTotsVehiclesActionPerformed
+
+    private void btBuscarXNumPolissaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarXNumPolissaActionPerformed
+        Polissa_Controller pc = new Polissa_Controller();
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+            Polissa p = pc.Buscar(eTNumeroPolissa.getText());
+            eTDNIPrenedor.setText(p.getPrenedor().getNif());
+            eTPolissaMatriculaVehicle.setText(p.getVehicle().getMatricula());
+            eTDataInici.setText(sdf.format(p.getDataInici()));
+            eTDataFi.setText(sdf.format(p.getDataFi()));
+            eTPrima.setText(String.valueOf(p.getPrima()));
+            cbTipusPolissa.setSelectedItem(p.getTipus());
+
+        } catch (NoResultException ex) {
+            JOptionPane.showMessageDialog(this, "Sense resultats");
+        }
+    }//GEN-LAST:event_btBuscarXNumPolissaActionPerformed
+
+    private void btInserirPolissaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInserirPolissaActionPerformed
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+            Client_Controller client_Control = new Client_Controller();
+            Client client = client_Control.Buscar(eTDNIPrenedor.getText());
+            Vehicle_Controller vc = new Vehicle_Controller();
+            Vehicle vehicle = vc.Buscar(eTPolissaMatriculaVehicle.getText());
+            Date dateInici = sdf.parse(eTDataInici.getText());
+            Date dateFi = sdf.parse(eTDataFi.getText());
+            Polissa_Controller pc = new Polissa_Controller();
+            Polissa polissa = new Polissa();
+            polissa.setNumeroPolissa(eTNumeroPolissa.getText());
+            polissa.setPrenedor(client);
+            polissa.setVehicle(vehicle);
+            polissa.setDataInici(dateInici);
+            polissa.setDataFi(dateFi);
+            polissa.setTipus(Polissa.TipusPolissa.valueOf(cbTipusPolissa.getSelectedItem().toString()));
+            polissa.setPrima(Double.valueOf(eTPrima.getText()));
+            pc.Insertar(polissa);
+            JOptionPane.showMessageDialog(this, "Polissa inserida.");
+        } catch (ParseException ex) {
+            Logger.getLogger(inicia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (PersistenceException ex) {
+            JOptionPane.showMessageDialog(this, "Fallo. Elemento duplicado");
+        }
+    }//GEN-LAST:event_btInserirPolissaActionPerformed
+
+    private void btModificarPolissaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModificarPolissaActionPerformed
+        Polissa_Controller pc= new Polissa_Controller();
+        Vehicle_Controller vc = new Vehicle_Controller();
+        Client_Controller cc = new Client_Controller();
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+            Vehicle v = vc.Buscar(eTPolissaMatriculaVehicle.getText().toUpperCase());
+            Client prenedor = cc.Buscar(eTDNIPrenedor.getText());
+            
+            Polissa p= pc.Buscar(eTNumeroPolissa.getText());
+            Date dateInici = sdf.parse(eTDataInici.getText());
+            Date dateFi = sdf.parse(eTDataFi.getText());
+            
+            p.setPrenedor(prenedor);
+            p.setVehicle(v);
+            p.setDataInici(dateInici);
+            p.setDataFi(dateFi);
+            p.setTipus(Polissa.TipusPolissa.valueOf(cbTipusPolissa.getSelectedItem().toString()));
+            p.setPrima(Double.valueOf(eTPrima.getText()));
+            System.out.println("INICI MODIFICACIO POLISSA");
+            pc.Modificar(p);
+            JOptionPane.showMessageDialog(this, "Modificat");
+        } catch (NoResultException ex) {
+            JOptionPane.showMessageDialog(this, "Sense resultats");
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Format de dates incorrecte");
+        }
+    
+    }//GEN-LAST:event_btModificarPolissaActionPerformed
+
+    private void btEliminarPolissaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEliminarPolissaActionPerformed
+        Polissa_Controller pc = new Polissa_Controller();
+        try {
+            Polissa p = pc.Buscar(eTNumeroPolissa.getText());
+            pc.Eliminar(p);
+            JOptionPane.showMessageDialog(this, "Eliminat");
+        } catch (PersistenceException ex) {
+            JOptionPane.showMessageDialog(this, "Fallo.");
+        }
+    }//GEN-LAST:event_btEliminarPolissaActionPerformed
+
+    private void btMostrarTotesPolissesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMostrarTotesPolissesActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+        Polissa_Controller pc = new Polissa_Controller();
+        List<Polissa> ConsultaTots = pc.ConsultaTots();
+        String col[] = {"Numero Polissa", "DNI Prendedor", "Matricula Vehicle",
+            "DataInici", "DataFi", "Prima", "Tipus"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        for (Polissa p : ConsultaTots) {
+            Object[] data = {
+                p.getNumeroPolissa(),
+                p.getPrenedor().getNif(),
+                p.getVehicle().getMatricula(),
+                sdf.format(p.getDataInici().getTime()),
+                sdf.format(p.getDataFi().getTime()),
+                p.getPrima(),
+                p.getTipus().toString()
+            };
+            tableModel.addRow(data);
+        }
+        jTable3.setModel(tableModel);
+    }//GEN-LAST:event_btMostrarTotesPolissesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -522,23 +879,42 @@ public class inicia extends javax.swing.JFrame {
     private javax.swing.JButton btBuscarTotsClients;
     private javax.swing.JButton btBuscarXMatricula;
     private javax.swing.JButton btBuscarXNom;
+    private javax.swing.JButton btBuscarXNumPolissa;
     private javax.swing.JButton btEliminar;
+    private javax.swing.JButton btEliminarPolissa;
     private javax.swing.JButton btEliminarVehicle;
     private javax.swing.JButton btInserir;
+    private javax.swing.JButton btInserirPolissa;
     private javax.swing.JButton btInserirVehicle;
     private javax.swing.JButton btModificar;
+    private javax.swing.JButton btModificarPolissa;
     private javax.swing.JButton btModificarVehicle;
+    private javax.swing.JButton btMostrarTotesPolisses;
     private javax.swing.JButton btMostrarTotsVehicles;
+    private javax.swing.JComboBox cbTipusPolissa;
     private javax.swing.JTextField eTAnyMatriculacio;
     private javax.swing.JTextField eTCarrer;
+    private javax.swing.JTextField eTDNIPrenedor;
     private javax.swing.JTextField eTDNIPropietari;
+    private javax.swing.JTextField eTDataFi;
+    private javax.swing.JTextField eTDataInici;
     private javax.swing.JTextField eTMarca;
     private javax.swing.JTextField eTMatricula;
     private javax.swing.JTextField eTNif;
     private javax.swing.JTextField eTNom;
     private javax.swing.JTextField eTNumero;
+    private javax.swing.JTextField eTNumeroPolissa;
     private javax.swing.JTextField eTPoblacio;
+    private javax.swing.JTextField eTPolissaMatriculaVehicle;
+    private javax.swing.JTextField eTPrima;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -548,11 +924,16 @@ public class inicia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }

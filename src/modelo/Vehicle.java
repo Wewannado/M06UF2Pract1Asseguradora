@@ -26,7 +26,8 @@ import org.hibernate.annotations.IndexColumn;
 @Entity
 @Table(name = "M6UF2_VEHICLES")
 @NamedQueries({
-@NamedQuery(name="VehicleMatricula", query="SELECT v FROM Vehicle v WHERE v.matricula=:matricula")})
+@NamedQuery(name="VehicleMatricula", query="SELECT v FROM Vehicle v WHERE v.matricula=:matricula"),
+@NamedQuery(name="vehiclesXClient", query="SELECT v FROM Vehicle v WHERE v.propietari=:propietari")})
 public class Vehicle implements Serializable{
 
     @Id
