@@ -44,9 +44,8 @@ public class Polissa_Controller {
         em.close();
         return p;
     }
-    
-    
-        public Polissa Buscar(Vehicle v) throws NoResultException {
+
+    public Polissa Buscar(Vehicle v) throws NoResultException {
         //Recupera el entity manager
         EntityManager em = new EM_Controller().getEntityManager();
         Polissa p = null;
@@ -74,7 +73,7 @@ public class Polissa_Controller {
 
         System.out.println("commit");
         //em.getTransaction().commit();
-        
+
         etx.commit();
 
         System.out.println("close");
@@ -116,9 +115,8 @@ public class Polissa_Controller {
         em.close();
         return lista;
     }
-    
-    
-        public List<Polissa> ConsultaXClient(Client c) {
+
+    public List<Polissa> ConsultaXClient(Client c) {
         // Recupera el entity manager
         EntityManager em = new EM_Controller().getEntityManager();
         System.out.println("Consulta");
@@ -130,9 +128,8 @@ public class Polissa_Controller {
         em.close();
         return lista;
     }
-        
-        
-           public List<Polissa> ConsultaXVehicle(Vehicle v) {
+
+    public List<Polissa> ConsultaXVehicle(Vehicle v) {
         // Recupera el entity manager
         EntityManager em = new EM_Controller().getEntityManager();
         System.out.println("Consulta");
